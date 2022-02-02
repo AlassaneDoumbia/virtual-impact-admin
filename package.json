@@ -1,0 +1,66 @@
+{
+  "name": "notus-react",
+  "version": "1.1.0",
+  "description": "Notus React - A free Tailwind CSS and React UI Kit and Admin by Creative Tim.",
+  "repository": "https://github.com/creativetimofficial/notus-react",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "5.15.3",
+    "@popperjs/core": "2.9.1",
+    "@redux-devtools/core": "^3.9.0",
+    "@tailwindcss/forms": "0.2.1",
+    "@tinymce/tinymce-react": "^3.12.6",
+    "autoprefixer": "10.2.5",
+    "axios": "^0.21.1",
+    "chart.js": "2.9.4",
+    "env-cmd": "^10.1.0",
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8",
+    "i18next": "^20.3.5",
+    "i18next-browser-languagedetector": "^6.1.2",
+    "light-toast": "^0.3.4",
+    "lodash": "^4.17.21",
+    "lodash.throttle": "^4.1.1",
+    "postcss": "8.2.8",
+    "react": "17.0.1",
+    "react-app-polyfill": "^2.0.0",
+    "react-dom": "17.0.1",
+    "react-i18next": "^11.11.4",
+    "react-redux": "^7.2.4",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "4.0.3",
+    "react-select": "^4.3.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "tailwindcss": "2.0.4",
+    "tinymce": "^5.9.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && gulp licenses",
+    "build:prod": "env-cmd -f src/prod.env react-scripts build && gulp licenses",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
+    "build:tailwind": "tailwind build src/assets/styles/index.css -o src/assets/styles/tailwind.css"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "optionalDependencies": {
+    "typescript": "4.2.3"
+  }
+}
