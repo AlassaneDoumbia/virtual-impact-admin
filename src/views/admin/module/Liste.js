@@ -7,7 +7,7 @@ import {navTo} from "helpers/helperFunctions";
 // import Toast from "light-toast";
 import {useSelector} from "react-redux";
 import {setLoadingAuthForm} from 'store/actions/index';
-import {getModules, deleteModule, set_module, set_modules} from 'store/actions/module/module';
+import {getModules, getModulesByEnseignants, deleteModule, set_module, set_modules} from 'store/actions/module/module';
 // import _ from 'lodash'
 import {connect} from 'react-redux'
 // components
@@ -18,7 +18,9 @@ const addEndpoint = "/admin/module-form/"
 const ModuleListe = (props) => {
     const {  i18n } = useTranslation();
     const history = useHistory()
+    const [isAdmin, setIsAdmin] = React.useState(false);
     const accessToken = useSelector(state => state.accessToken)
+    const id = useSelector(state => state.session.id)
     const headers = [
             // i18n.t('admin.modules.table.id'),
             i18n.t('admin.modules.table.nom'),
@@ -30,7 +32,7 @@ const ModuleListe = (props) => {
     const editClick = (val)=>{
       console.log(addEndpoint+''+val.identifiant)
       // let type = checkRoles(val.roles)
-      navTo(history, addEndpoint+''+val.identifiant, { type: null })
+      navTo(history, isAdmin === "admin" ? "/admin/module-form/" : "module-form-enseignant/"+val.identifiant, { type: null })
     }
     
     const infoClick = (val)=>{
@@ -45,9 +47,13 @@ const ModuleListe = (props) => {
     }
 
     useEffect(() => {
+      console.log("id :::::: ",id);
+      if (props.roles === "admin") {
+        setIsAdmin(true)
+      }
       props.set_modules(null)
       props.set_module(null)    
-      props.getModules(accessToken)
+      isAdmin ? props.getModules(accessToken) : props.getModulesByEnseignants({"token":accessToken,"id":id})
       console.log("tab ::::",props.modules);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -68,7 +74,7 @@ const ModuleListe = (props) => {
                     className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="button" 
                     // onClick={navTo(history, "/admin/module-form/", null)}
-                    onClick={() => navTo(history, "/admin/module-form", null)}
+                    onClick={() => navTo(history, isAdmin ? "/admin/module-form" : "/admin/module-form-enseignant", null)}
                   >
                   <i className="fas fa-user-plus"></i> 
                   {i18n.t("admin.added")}
@@ -143,6 +149,7 @@ const ModuleListe = (props) => {
 const mapStateToProps = (state) =>{
   return {
     session:state.session,
+    roles:state.roles,
     authLoadingForm:state.authLoadingForm,
     loadingResource:state.loadingResource,
     modules:state.modules,
@@ -157,6 +164,9 @@ const mapDispatchToProps = (dispatch)=>{
     },
     getModules:(val)=>{
       dispatch(getModules(val))
+    },
+    getModulesByEnseignants:(val)=>{
+      dispatch(getModulesByEnseignants(val))
     },
     deleteModule:(val)=>{
       dispatch(deleteModule(val))

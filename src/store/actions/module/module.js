@@ -51,6 +51,21 @@ export const getModules = (payload)=>{
     }
 }
 
+// recuperer la liste des Modules
+export const getModulesByEnseignants = (payload, id)=>{
+    console.log("payload ::::::",payload)
+    return async function (dispatch){
+        API.defaults.headers.get['Authorization'] = 'Bearer '+ payload.token;     
+        await API.get('/module/allModuleEnseignant/'+payload.id).then(async (res) => {
+            console.log(res.data)
+            await dispatch(set_modules(res.data) )
+        }).catch(err=>{
+            !_.isUndefined(err.response&&err.response?.status === 401) ?
+                customUnauthorizedAction(dispatch) : Toast.fail(getRequestMessage(err.response?.status), 4000);
+        })
+    }
+}
+
 // modifier une marque
 export const updateModule = (payload)=>{
 

@@ -23,6 +23,7 @@ import EnseignantListe from "views/admin/enseignant/Liste";
 // Module import
 import ModuleListe from "views/admin/module/Liste";
 import ModuleForm from "views/admin/module/Form";
+import ModuleFormEnseignant from "views/admin/module/Form-Enseignant";
 import ModuleInfo from "views/admin/module/Info";
 // Chapitre import
 import ChapitreListe from "views/admin/chapitre/Liste";
@@ -60,6 +61,8 @@ const Admin = (props) => {
               <Route path="/admin/modules" exact component={ModuleListe} />
               <Route path="/admin/module-form" exact component={ModuleForm} />
               <Route path="/admin/module-form/:id" exact component={ModuleForm} />
+              <Route path="/admin/module-form-enseignant" exact component={ModuleFormEnseignant} />
+              <Route path="/admin/module-form-enseignant/:id" exact component={ModuleFormEnseignant} />
               <Route path="/admin/module-info/:id" exact component={ModuleInfo} />
               {/* chapitre path */}
               <Route path="/admin/chapitres" exact component={ChapitreListe} />

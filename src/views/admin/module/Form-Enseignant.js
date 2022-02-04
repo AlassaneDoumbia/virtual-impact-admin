@@ -7,77 +7,36 @@ import {setLoadingAuthForm,setSession} from 'store/actions/index';
 import {useSelector, connect} from "react-redux";
 import {Redirect} from 'react-router-dom'
 import {setFormValid } from 'store/actions/auth'
-import AsyncSelect from 'react-select/async'
 import {getModule, updateModule, createModule, set_module, set_modules} from 'store/actions/module/module';
 import {getEnseignants} from 'store/actions/enseignant/enseignant';
 // import _ from 'lodash'
 import {controlModuleInput} from 'helpers/helperFunctions';
 
 // export default function Login() {
-const ModuleForm = (props) => {
+const ModuleFormEnseignant = (props) => {
     const {  i18n } = useTranslation();
     const location = useLocation();
     const accessToken = useSelector(state => state.accessToken)
-    const [inputValue, setInputValue] = useState('')
-    const [selectedValue, setSelectedValue] = useState(null);
+    const id = useSelector(state => state.session.id)
     const [moduleInfo, setModuleInfo] = useState({
         
         identifiant:props.match.params?.identifiant,
         nom:"",
         description:"",
         classe:"",
-        idUtilisateur:"", 
+        idUtilisateur:id, 
     })
 
     const handleChange = (event) =>{
         setModuleInfo({...moduleInfo,[event.target.name]: event.target.value})
     }
-    
-
-    
-    const handleInputChange = (newValue) => {
-        console.log("inputValue" + newValue)
-        setInputValue(newValue)
-    };
-
-    const handleChangeOp = value => {
-        console.log("inputValue" + value)
-        setSelectedValue(value);
-    }
-
-    // const loadOptions = async ( ) => {
-    //     // perform a request
-    //     console.log(inputValue)
-    //     if (inputValue != "" && inputValue.length > 2) {
-    //         await searchFunction(inputValue)
-    //         return props.customers.results
-    //     }else{
-    //         await props.getCustomers(accessToken)
-    //         return props.customers.results
-    //     }
-        
-    // }
-
-    const filterEnseignants = () => {
-        return props.enseignants && props.enseignants !== undefined && props.enseignants.length > 0 && 
-        props.enseignants.filter(i =>
-          i.nomComplet.toLowerCase().includes(inputValue.toLowerCase())
-        );
-    };
-      
-      const loadOptions = (inputValue, callback) => {
-        setTimeout(() => {
-          callback(filterEnseignants(inputValue));
-        }, 1000);
-      };
-
   
     const save = () => {
         let data ={
             nom:moduleInfo.nom ||  props.module.nom ,
             description:moduleInfo.description ||  props.module.description,
             classe:moduleInfo.classe ||  props.module.classe,
-            idUtilisateur:selectedValue.identifiant ||  props.module.idUtilisateur,
+            idUtilisateur:id,
         }
         console.log(data);
         const payload = {data:data,token:accessToken}
@@ -93,7 +52,7 @@ const ModuleForm = (props) => {
             description:moduleInfo.description ||  props.module.description,
             classe:moduleInfo.classe ||  props.module.classe,
             // idUtilisateur:moduleInfo.idUtilisateur ||  props.module.idUtilisateur,
-            idUtilisateur: selectedValue?.identifiant || props.module?.idUtilisateur?.identifiant
+            idUtilisateur: id
         }
         const payload = {data:data,token:accessToken}
         console.log("payload :::::",payload);
@@ -110,11 +69,10 @@ const ModuleForm = (props) => {
 
     useEffect(() => {   
         props.setFormValid(false)                                                                                                                                                                                                  
-        props.getEnseignants(accessToken)                                                                                                                                                                                                 
+        // props.getEnseignants(accessToken)                                                                                                                                                                                                 
         if (props.match.params.id) {
             const payload={"id":props.match.params.id,"token":accessToken}
             props.getModule(payload)
-            setSelectedValue(props.module?.idUtilisateur)
         }  /***/
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
@@ -184,7 +142,7 @@ const ModuleForm = (props) => {
                                         />
                                         </div>
                                     </div>
-                                    <div className="w-full lg:w-6/12 px-4">
+                                    {/* <div className="w-full lg:w-6/12 px-4">
                                         <div className="relative w-full mb-3">
                                             <label
                                                 className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
@@ -212,7 +170,7 @@ const ModuleForm = (props) => {
                                                 onChange={(e) => handleChangeOp(e)}
                                             />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" />
@@ -326,5 +284,5 @@ const mapDispatchToProps = (dispatch)=>{
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ModuleForm)
+export default connect(mapStateToProps,mapDispatchToProps)(ModuleFormEnseignant)
 

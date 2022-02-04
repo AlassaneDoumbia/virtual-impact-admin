@@ -54,7 +54,7 @@ export const loadState = ()=>{
 
 export const customUnauthorizedAction = (dispatch) =>{
     Toast.fail(getRequestMessage(401), 4000)
-    dispatch(setSession(null))
+    // dispatch(setSession(null))
     // window.location.reload()
 }
 
@@ -70,10 +70,10 @@ export const checkRoles = (tab) => {
     console.log("roles  ::::",tab);
     let type = ""
     tab && tab.length >=0 && tab.forEach(element => {
-        if (element.name === "ROLE_ETUDIANT") {
+        if (element === "ROLE_ETUDIANT") {
             type = "etudiant" 
         }
-        if (element.name === "ROLE_ENSEIGNANT") {
+        if (element === "ROLE_ENSEIGNANT") {
             type = "enseignant" 
         }
     });

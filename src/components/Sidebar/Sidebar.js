@@ -1,10 +1,7 @@
-import React, {useState, useEffect} from "react"; 
+import React, {useEffect} from "react"; 
 import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import {setSession} from 'store/actions/index';
 import {clearState} from "helpers/helperFunctions";
-import { useHistory} from 'react-router-dom'
-import {checkRoles, showComponent} from "helpers/helperFunctions";
 import {connect} from 'react-redux'
 
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
@@ -16,7 +13,7 @@ function Sidebar(props) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [isAdmin, setIsAdmin] = React.useState(false);
   const { i18n } = useTranslation();
-  const history = useHistory()
+  // const history = useHistory()
 
   
 
@@ -28,14 +25,10 @@ function Sidebar(props) {
       // history.push("/auth/login");
     },3000)
   }
-  const defineType = (type) =>{
-    
-  }
+
   useEffect(() => {
     console.log(props.roles);
-    let type = checkRoles(props.roles)
-    console.log("type :::::: ",type);
-    if (type === "") {
+    if (props.roles === "admin") {
       setIsAdmin(true)
     }
     console.log("isAdmin :::::: ",isAdmin);
@@ -391,9 +384,9 @@ function Sidebar(props) {
             {/* Divider 
             <hr className="my-4 md:min-w-full" />*/}
             {/* Heading */}
-            {/* <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               Documentation
-            </h6> */}
+            </h6>
             {/* Navigation */}
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               

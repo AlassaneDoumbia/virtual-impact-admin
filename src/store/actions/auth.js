@@ -1,5 +1,6 @@
 import { setLoadingForm, set_roles} from "./index";
 import { setSession, setLoadingAuthForm} from "./index";
+import {checkRoles} from "helpers/helperFunctions";
 import {clearState, getRequestMessage, customUnauthorizedAction} from "helpers/helperFunctions";
 import {useSelector} from "react-redux";
 import API from '../../helpers/api'
@@ -295,8 +296,8 @@ const setEmailLogin = (payload)=>{
             // dispatch(setRefreshToken(res.data.refresh))
             dispatch(setRefreshToken(res.data.refreshToken))
             dispatch(setAccessToken(res.data.accessToken))
+            dispatch(set_roles(checkRoles(res.data.roles)))
             dispatch(setSession(res.data))
-            dispatch(set_roles(res.data.roles))
             dispatch(setLoadingAuthForm(false))
             // API.defaults.headers.get['Authorization'] = 'Bearer '+ res.data.access;
         }).catch(err=>{
