@@ -53,7 +53,7 @@ const ModuleListe = (props) => {
       }
       props.set_modules(null)
       props.set_module(null)    
-      isAdmin ? props.getModules(accessToken) : props.getModulesByEnseignants({"token":accessToken,"id":id})
+      props.roles === "admin" ? props.getModules(accessToken) : props.getModulesByEnseignants({"token":accessToken,"id":id})
       console.log("tab ::::",props.modules);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

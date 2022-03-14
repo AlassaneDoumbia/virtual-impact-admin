@@ -7,6 +7,7 @@ import { useHistory} from 'react-router-dom'
 import {setLoadingAuthForm,setSession} from 'store/actions/index';
 import CardQuote from "components/Cards/CardQuote.js";
 import {getModule, set_module, set_modules} from 'store/actions/module/module';
+import { height } from "tailwindcss/defaultTheme";
 
 // export default function Login() {
 const ModuleInfo = (props) => {
@@ -118,6 +119,27 @@ const ModuleInfo = (props) => {
                 </div>
               </div>
             </div>
+            {
+                 (props.module && props.module.cover && props.module.cover !== undefined) ?
+                   (
+                    <div className="flex flex-wrap">
+                    <div className="w-full lg:w-12/12 px-4">
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          {i18n.t('admin.modules.table.cover')}
+                        </label>
+                        <img style={{height: "150px"}} src= {props.module.cover} />
+                      </div>
+                    </div>
+                  </div>
+                    
+                  )
+                :null
+                
+              }
           </form>
         </div>
       </div>

@@ -62,6 +62,7 @@ fr = {
                 description:"Description",
                 classe:"Classe",
                 chapitreModule:"Module",
+                cover:"Image",
                 idUtilisateur:"Enseignant",
             },
         },

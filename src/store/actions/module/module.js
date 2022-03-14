@@ -114,6 +114,30 @@ export const createModule = (payload)=>{
         }) /** */
     }
 }
+// modifier une marque
+export const createModuleWithImage = (payload)=>{
+
+    return function (dispatch){
+        
+        dispatch(setLoadingForm(true))
+        dispatch(setFormValid(false)) 
+        console.log("dat ::::: ",payload.data);
+        const config = {
+            headers: {  "Content-Type": "multipart/form-data", Authorization: `Bearer ${payload.token}`  }
+            // headers: {  "Content-Type": "multipart/form-data", Authorization: `Bearer ${payload.token}`  }
+        };
+        API.post('/module/create-module',payload.data,config).then(async res => {
+            dispatch(setLoadingForm(false)) 
+            dispatch(setFormValid(true))   
+               
+        }).catch(err=>{
+            console.log(err)
+            dispatch(setLoadingForm(false))
+            !_.isUndefined(err.response&&err.response?.status === 401) ?
+                customUnauthorizedAction(dispatch) : Toast.fail(getRequestMessage(err.response?.status), 4000);
+        }) /** */
+    }
+}
 
 
 // recuperer un Module 
