@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 const CardQuote = ({ theadData, tbodyData, elt , color, addEndpoint, icon, navHeader}) => {
 
   const {i18n } = useTranslation();
-// export default function CardQuote() {
+// export default function CardQuote() { 
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
